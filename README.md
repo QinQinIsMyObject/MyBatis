@@ -1,40 +1,49 @@
 # 此项目说明
 ## 1、主要功能
-    	解决在实际的开发工作当中，会存在数据库表中的列和我们的实体类属性不一致问题，当出现这情况时
-    有2种解决方案：
-    	1）使用ResultMap
-            作用
-                a1.全局定义，方便重用 
-                a2.解决属性名和列名不一致问题
-                a3.有利于从多个表得到自定义所需要的数据
-        2）使用as关键字
+    数据库连接及实体别名优化。
 ## 2、主要知识点
-### Mybatis
-#### 概念
-		优秀的数据持久层框架，在实体类和sql之间建立映射关系，半自动化的ORM实现，支持定制化 SQL、存储过程以及高级映射,MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集封装性低于Hibernate，性能优秀、小巧易学。
-#### 思想
-	程序和sql语句分离，配置扩展方便。
-#### 架构
+### 1)数据库连接优化
+	写代码讲究扩展和维护性，一般便于优化、扩展不会把代码写死或者是固定下来。鉴于此，我们可以把数据库连接信息单独写在一个配置文件当中独立抽取出来。
+把数据库连接信息抽取到-db.properties中
+```
+driver=com.mysql.jdbc.Driver
+url=jdbc:mysql://localhost:3306/ms
+username=root
+password=admin
+```
+把数据库连接信息db.properties引入核心配置文件mybatis-config.xml
+```
+<!--引入db.propertis文件 -->
+<properties resource="db.properties"/>
+```
+将连接信息用el表达式读取出来
+```
+<!--POOLED:Mybatis自带数据源 -->
+<dataSource type="POOLED">
+  <property name="driver" value="${driver}"/>
+  <property name="url" value="${url}"/>
+  <property name="username" value="${username}"/>
+  <property name="password" value="${password}"/>
+</dataSource>
+```
+### 2)实体类别名优化
+		在我们的映射文件当中**Mapper.xml经常会碰到参数类型或返回值类型为实体类的情况，正常情况下我们需要写类的全路径，如果系统中类似于这种操作太多，对我们来讲其实是一种消耗；基于此，我们统一在核心配置文件中为实体类取别名，方便简化我们在映射文件中的操作。取别名两种方式：
+#### a、为每个实体类取别名
+```
+<!--给实体类取别名-->
+<typeAliases>
+	<!--简化在mapper配置文件中使用 为每一个实体类取别名-->
+  	<typeAlias type="com.ls.entity.Student" alias="stu"/>
+</typeAliases>
+```
+#### b、为整个包下面的实体类取别名
 
-![](mybatis架构.png)
-
-#### 优缺点
-##### 优点: 
-    a、小巧易上手，是最简单的持久化框架 ；
-    b、程序与sql分离，管理、扩展、维护方便，可重用性强 ；
-    c、提供XMl标签，支持编写动态sql。
-##### 缺点:  
-    a、sql语句编写量大，对编程人员sql功底有一定要求；
-    b、由于sql语句依赖于数据库、导致数据库移植性差。
+```
+<!--为整个包下面的实体类取别名 -->
+<package name="com.ls.entity"/>
+```
 ## 3、说明
-	1）创建项目，导入jar或POM依赖；
-	2）编写配置文件---db.properties和mybatis.xml；
-	3）编写实体类和映射文件；
-	4）功能测试。
 ## 4、报错
-### 1)mybatis报错 Error building SqlSession
-	解决方法1：把conf.xml文件下的<mapper>里的“.”改为“/”；
-	解决方法2：conf.xml路径出错。
 ## 5、附加
 ### 依赖
 	官网：https://mvnrepository.com/
