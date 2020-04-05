@@ -40,4 +40,28 @@
 		select * from student where sname like
 		concat('%',#{sname},'%')
 	</select>
+
+	<!--根据学生编号查询单个学生 -测试属性名和列名不一致出现的问题 -->
+	<select id="testSelectStuByResultMap"
+		resultType="com.asu.entity.Student">
+		select * from
+		student
+		where sno = #{sno}
+	</select>
+	
+	<!--声明了一个ResultMap
+	   1.全局定义，方便重用；
+	   2.解决属性名和列名不一致问题；
+	   3.有利于从多个表得到自定义所需要的数据。-->
+	<resultMap type="com.asu.entity.Student" id="stuResultMap">
+		<result property="picPath" column="pic_path" />
+	</resultMap>
+
+	<!--根据学生编号查询单个学生 -解决属性名和列名不一致出现问题 方案1-通过ResultMap进行映射 -->
+	<select id="selectStuByResultMap" resultMap="stuResultMap">
+		select * from
+		student
+		where sno = #{sno}
+	</select>
+
 </mapper>
