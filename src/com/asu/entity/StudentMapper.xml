@@ -48,11 +48,11 @@
 		student
 		where sno = #{sno}
 	</select>
-	
+
 	<!--声明了一个ResultMap
 	   1.全局定义，方便重用；
 	   2.解决属性名和列名不一致问题；
-	   3.有利于从多个表得到自定义所需要的数据。-->
+	   3.有利于从多个表得到自定义所需要的数据。 -->
 	<resultMap type="com.asu.entity.Student" id="stuResultMap">
 		<result property="picPath" column="pic_path" />
 	</resultMap>
@@ -64,4 +64,11 @@
 		where sno = #{sno}
 	</select>
 
+	<!--根据学生编号查询单个学生 -解决属性名和列名不一致出现问题 方案2-通过as关键字 -->
+	<select id="selectStuByAs" resultType="com.asu.entity.Student">
+		select pic_path as
+		picPath,sname from
+		student
+		where sno = #{sno}
+	</select>
 </mapper>
