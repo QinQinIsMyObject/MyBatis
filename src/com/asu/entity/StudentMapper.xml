@@ -5,7 +5,7 @@
 <mapper namespace="com.asu.entity.StudentMapper">
 
 	<!-- 增加学生 -->
-	<insert id="addStu" parameterType="com.asu.entity.Student"
+	<insert id="addStu" parameterType="student"
 		useGeneratedKeys="true" keyProperty="Sno">
 		insert into student(sname ,sex,
 		age) values(#{sname},#{sex},#{age})
@@ -18,24 +18,24 @@
 	</delete>
 
 	<!-- 修改学生 -->
-	<update id="updateStu" parameterType="com.asu.entity.Student">
+	<update id="updateStu" parameterType="student">
 		update student set
 		sname=#{sname} where sno=#{sno}
 	</update>
 
 	<!-- 查询单个学生 -->
-	<select id="selectStuBySno" resultType="com.asu.entity.Student">
+	<select id="selectStuBySno" resultType="student">
 		select sname from student
 		where sno = #{sno}
 	</select>
 
 	<!-- 查询所有学生 -->
-	<select id="selectAllStu" resultType="com.asu.entity.Student">
+	<select id="selectAllStu" resultType="student">
 		select * from student
 	</select>
 
 	<!-- 根据名字进行模糊查詢 -->
-	<select id="selectBySname" resultType="com.asu.entity.Student"
+	<select id="selectBySname" resultType="student"
 		parameterType="String">
 		select * from student where sname like
 		concat('%',#{sname},'%')
@@ -43,7 +43,7 @@
 
 	<!--根据学生编号查询单个学生 -测试属性名和列名不一致出现的问题 -->
 	<select id="testSelectStuByResultMap"
-		resultType="com.asu.entity.Student">
+		resultType="student">
 		select * from
 		student
 		where sno = #{sno}
@@ -53,7 +53,7 @@
 	   1.全局定义，方便重用；
 	   2.解决属性名和列名不一致问题；
 	   3.有利于从多个表得到自定义所需要的数据。 -->
-	<resultMap type="com.asu.entity.Student" id="stuResultMap">
+	<resultMap type="student" id="stuResultMap">
 		<result property="picPath" column="pic_path" />
 	</resultMap>
 
@@ -65,7 +65,7 @@
 	</select>
 
 	<!--根据学生编号查询单个学生 -解决属性名和列名不一致出现问题 方案2-通过as关键字 -->
-	<select id="selectStuByAs" resultType="com.asu.entity.Student">
+	<select id="selectStuByAs" resultType="student">
 		select pic_path as
 		picPath,sname from
 		student
