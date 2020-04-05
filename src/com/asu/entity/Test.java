@@ -1,7 +1,6 @@
 package com.asu.entity;
 
 import java.io.InputStream;
-import java.util.List;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -56,10 +55,18 @@ public class Test {
 //			}
 
 			// 按照名字模糊查询
-			List<Student> sList = session.selectList("selectBySname", "小");
-			for (Student stu : sList) {
-				System.out.println(stu.getSname());
-			}
+//			List<Student> sList = session.selectList("selectBySname", "小");
+//			for (Student stu : sList) {
+//				System.out.println(stu.getSname());
+//			}
+
+			// 根据学生编号 查询学生-测试属性名和列名不一致出现的问题
+//			Student stu = session.selectOne("testSelectStuByResultMap", 9);
+//			System.out.println(stu.getSname() + ":" + stu.getPicPath());
+
+			// 根据学生编号 查询学生-解决属性和列名不一致问题方案一 通过ResultMap
+			Student stu = session.selectOne("selectStuByResultMap", 9);
+			System.out.println(stu.getSname() + ":" + stu.getPicPath());
 
 			// 提交事务
 			session.commit();
