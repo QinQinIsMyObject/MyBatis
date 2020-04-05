@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--配置MyBatis的多套运行环境 -->
+	<environments default="dev">
+		<!--每一个environment关联一个连接 -->
+		<environment id="dev">
+			<!--事务管理模式 (采用jdbc的事务管理) -->
+			<transactionManager type="JDBC" />
+			<!--配置数据源 -->
+			<!--POOLED:Mybatis自带数据源 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/ms" />
+				<property name="username" value="root" />
+				<property name="password" value="admin" />
+			</dataSource>
+		</environment>
+	</environments>
+	<!--映射器-告诉MyBatis去哪里找到sql映射文件 -->
+	<mappers>
+		<!--第1种方式-通过类资源路径获取 -->
+		<mapper resource="com/asu/entity/StudentMapper.xml" />
+		<!--第2种方式-通过Url获取资源 -->
+		<!-- <mapper url="f:/pMapper.xml"/> -->
+	</mappers>
+</configuration>
