@@ -65,7 +65,11 @@ public class Test {
 //			System.out.println(stu.getSname() + ":" + stu.getPicPath());
 
 			// 根据学生编号 查询学生-解决属性和列名不一致问题方案一 通过ResultMap
-			Student stu = session.selectOne("selectStuByResultMap", 9);
+//			Student stu = session.selectOne("selectStuByResultMap", 9);
+//			System.out.println(stu.getSname() + ":" + stu.getPicPath());
+
+			// 根据学生编号 查询学生-解决属性和列名不一致问题方案二 通过as关键字
+			Student stu = session.selectOne("selectStuByAs", 9);
 			System.out.println(stu.getSname() + ":" + stu.getPicPath());
 
 			// 提交事务
