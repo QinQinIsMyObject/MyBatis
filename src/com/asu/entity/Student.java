@@ -11,7 +11,7 @@ public class Student {
 	private Integer gid;
 	private String phone;
 	private String address;
-	private String pic;
+	private String picPath; // 图片地址
 
 	public Integer getSno() {
 		return sno;
@@ -77,12 +77,12 @@ public class Student {
 		this.address = address;
 	}
 
-	public String getPic() {
-		return pic;
+	public String getPicPath() {
+		return picPath;
 	}
 
-	public void setPic(String pic) {
-		this.pic = pic;
+	public void setPicPath(String picPath) {
+		this.picPath = picPath;
 	}
 
 }
